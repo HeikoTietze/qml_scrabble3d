@@ -21,6 +21,7 @@ Image {
         delay: 0
         timeout: 5000
         text: tiptext
+        //FIXME: transparent background on macOS
         implicitWidth: tipMetrics.width > tipWidth
                            ? tipWidth
                            : tipMetrics.width + tip.leftMargin + tip.rightMargin

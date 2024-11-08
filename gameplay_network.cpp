@@ -77,6 +77,7 @@ void GamePlay::connect(QString name, QString password, QString email, QString co
 
 void GamePlay::disconnect()
 {
+    #ifndef Q_OS_ANDROID // FIXME: messagebox ends in dead loop on Android
     if (m_pNetwork->isConnected()) //do not ask if connection has failed
     {
         QSettings settings(config::ini(), QSettings::IniFormat);
@@ -93,10 +94,14 @@ void GamePlay::disconnect()
             msgBox.setCheckBox(checkBox.get());
             int result = msgBox.exec();
             settings.setValue("program/confirmlogout", checkBox->checkState() == Qt::Checked);
+            qWarning() << "in";
             if (result == QMessageBox::No)
                 return;
+            qWarning() << "out";
         }
     }
+    #endif
+    qWarning() << "off";
     m_bIsConnected = false;
     emit connectedChanged();
 
